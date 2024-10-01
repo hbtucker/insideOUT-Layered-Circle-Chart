@@ -1,5 +1,7 @@
 function _1(md){return(
-md`Click each circle to zoom in and out of each layer. The deepest layer represents the responsibilities for an individual.`
+md`md<div style="color: grey; font: 13px/25.5px var("'Poppins', sans-serif"); text-transform: uppercase;"><h1 style="display: none;">Layered Org Chart</h1>
+  
+  Click each circle to zoom in and out of each layer. The deepest layer represents the responsibilities for an individual.`
 )}
 
 function _chart(d3,data)
