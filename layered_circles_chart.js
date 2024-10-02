@@ -44,10 +44,10 @@ function _chart(d3,data)
     .selectAll("circle")
     .data(root.descendants().slice(1))
     .join("circle")
-    .attr("fill", (d) => (d.children ? color(d.depth) : "#6b6b6b"))
+    .attr("fill", (d) => (d.children ? color(d.depth) : "#e9edec"))
     .attr("pointer-events", (d) => (!d.children ? "none" : null))
     .on("mouseover", function () {
-      d3.select(this).attr("stroke", "#b1b1b1");
+      d3.select(this).attr("stroke", "#6b6b6b");
     })
     .on("mouseout", function () {
       d3.select(this).attr("stroke", null);
