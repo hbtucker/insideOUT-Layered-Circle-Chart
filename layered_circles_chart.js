@@ -35,7 +35,7 @@ function _chart(d3,data)
     .attr("height", height)
     .attr(
       "style",
-      `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: #f6f6f6; cursor: pointer; font-family: 'Poppins', sans-serif;`
+      `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: #fff; cursor: pointer; font-family: 'Poppins', sans-serif;`
     );
 
   // Append the nodes.
@@ -47,7 +47,7 @@ function _chart(d3,data)
     .attr("fill", (d) => (d.children ? color(d.depth) : "#e9eaed"))
     .attr("pointer-events", (d) => (!d.children ? "none" : null))
     .on("mouseover", function () {
-      d3.select(this).attr("stroke", "#1f1f1f");
+      d3.select(this).attr("stroke", "#b1b1b1");
     })
     .on("mouseout", function () {
       d3.select(this).attr("stroke", null);
