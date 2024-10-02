@@ -212,10 +212,10 @@
       ]
     },
     {
-      "name": "Product Team",
+      "name": "Product",
       "children": [
         {
-          "name": "User Experience",
+          "name": "User Experience Team",
           "children": [
             {
               "name": "Karen White",
@@ -277,7 +277,7 @@
           ]
         },
         {
-          "name": "Product Strategy",
+          "name": "Product Strategy Team",
           "children": [
             {
               "name": "Nathan Scott",
@@ -325,7 +325,7 @@
       "name": "",
       "children": [
         {
-          "name": "Exec Team",
+          "name": "Exec",
           "children": [
             {
               "name": "Dave Smith",
@@ -392,7 +392,7 @@
       "name": "Sales",
       "children": [
         {
-          "name": "Enterprise Sales",
+          "name": "Enterprise Sales Team",
           "children": [
             {
               "name": "Paul Thompson",
@@ -454,11 +454,11 @@
           ]
         },
         {
-          "name": "SMB Sales",
+          "name": "SMB Sales Team",
           "children": [
             {
               "name": "Samuel Lee",
-              "title": "SMB Sales\nRepresentative",
+              "title": "SMB Sales Team\nRepresentative",
               "value": 3500,
               "children": [
                 {
