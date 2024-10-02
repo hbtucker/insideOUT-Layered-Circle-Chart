@@ -215,7 +215,7 @@
       "name": "Product",
       "children": [
         {
-          "name": "User Experience Team",
+          "name": "UX Team",
           "children": [
             {
               "name": "Karen White",
@@ -325,7 +325,7 @@
       "name": "",
       "children": [
         {
-          "name": "Exec",
+          "name": "Exec Team",
           "children": [
             {
               "name": "Dave Smith",
@@ -396,7 +396,7 @@
           "children": [
             {
               "name": "Paul Thompson",
-              "title": "Enterprise Account\nExecutive",
+              "title": "Enterprise Account\nExec Teamutive",
               "value": 3500,
               "children": [
                 {
