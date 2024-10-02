@@ -61,7 +61,7 @@ function _chart(d3,data)
   const label = svg
     .append("g")
     .style("font-family", "'Poppins', sans-serif")
-    .style("font-size", "15px")
+    .style("font-size", "14px")
     .attr("pointer-events", "none")
     .attr("text-anchor", "middle")
     .selectAll("text")
