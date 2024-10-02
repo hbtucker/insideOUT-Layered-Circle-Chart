@@ -5,7 +5,7 @@
       "name": "Engineering",
       "children": [
         {
-          "name": "Web Development",
+          "name": "Web Team",
           "children": [
             {
               "name": "Alice Johnson",
@@ -86,7 +86,7 @@
           ]
         },
         {
-          "name": "Mobile Development",
+          "name": "App Team",
           "children": [
             {
               "name": "Eva Martinez",
@@ -167,11 +167,11 @@
           ]
         },
         {
-          "name": "DevOps",
+          "name": "Platform Team",
           "children": [
             {
               "name": "Irene Taylor",
-              "title": "DevOps Engineer",
+              "title": "Platform Team Engineer",
               "value": 3500,
               "children": [
                 {
@@ -212,7 +212,7 @@
       ]
     },
     {
-      "name": "Product Management",
+      "name": "Product Team",
       "children": [
         {
           "name": "User Experience",
