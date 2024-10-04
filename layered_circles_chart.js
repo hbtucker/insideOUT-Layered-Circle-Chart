@@ -160,20 +160,19 @@ function chart(data) {
 }
 
 // Export the chart function
-export function define(runtime, observer) {
+function _data(FileAttachment){return(
+FileAttachment("data.json").json()
+)}
+
+export default function define(runtime, observer) {
   const main = runtime.module();
-
-  main.variable(observer()).define(["md"], function(md) {
-    return md`# Layered Org Chart
-    
-    Click each circle to zoom in and out of each layer. The deepest layer represents the responsibilities for an individual.`;
-  });
-
-  main.variable(observer("chart")).define("chart", ["d3", "data"], chart);
-
-  main.variable(observer("data")).define("data", ["FileAttachment"], function(FileAttachment) {
-    return FileAttachment("data.json").json();
-  });
-
+  function toString() { return this.url; }
+  const fileAttachments = new Map([
+    ["data.json", {url: new URL("./files/data.json", import.meta.url), mimeType: "application/json", toString}],
+  ]);
+  main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
+  main.variable(observer()).define(["md"], _1);
+  main.variable(observer("chart")).define("chart", ["d3","data"], _chart);
+  main.variable(observer("data")).define("data", ["FileAttachment"], _data);
   return main;
 }
