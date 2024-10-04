@@ -1,11 +1,3 @@
-import * as d3 from "d3";
-
-function _1(md) {
-  return md`# Layered Org Chart
-  
-  Click each circle to zoom in and out of each layer. The deepest layer represents the responsibilities for an individual.`;
-}
-
 function _chart(d3, data) {
   // Specify the chart's dimensions.
   const width = 928;
@@ -40,22 +32,9 @@ function _chart(d3, data) {
     .attr("height", height)
     .attr("style", `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: #fff; cursor: pointer; font-family: 'Poppins', sans-serif;`);
 
-  // Add the dark mode toggle switch
-  const toggleContainer = d3.create("div")
-    .style("position", "absolute")
-    .style("top", "10px")
-    .style("left", "10px");
-
-  const toggleButton = toggleContainer.append("button")
-    .text("Toggle Dark Mode")
-    .style("font-family", "'Poppins', sans-serif")
-    .style("padding", "5px 10px")
-    .style("cursor", "pointer");
-
-  let isDarkMode = false;
-
   // Append the nodes.
-  const node = svg.append("g")
+  const node = svg
+    .append("g")
     .selectAll("circle")
     .data(root.descendants().slice(1))
     .join("circle")
@@ -66,7 +45,8 @@ function _chart(d3, data) {
     .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
 
   // Append the text labels.
-  const label = svg.append("g")
+  const label = svg
+    .append("g")
     .style("font-family", "'Poppins', sans-serif")
     .style("font-size", "14px")
     .attr("pointer-events", "none")
@@ -141,29 +121,35 @@ function _chart(d3, data) {
       .on("end", function(d) { if (d.parent !== focus && d.depth >= 3) this.style.display = "none"; });
   }
 
-  // Toggle dark mode function
-  function toggleDarkMode() {
-    isDarkMode = !isDarkMode;
+  // Dark mode toggle functionality
+  function updateColors(isDarkMode) {
+    const textColor = isDarkMode ? 'white' : 'black';
+    const backgroundColor = isDarkMode ? '#191919' : '#fff';
     
-    if (isDarkMode) {
-      svg.style("background", "#121212");
-      node.attr("fill", d => d.children ? darkColor(d.depth) : "#2a2a2a");
-      label.style("fill", "#ffffff");
-      label.selectAll("tspan").style("fill", "#ffffff");
-      toggleButton.text("Toggle Light Mode");
-    } else {
-      svg.style("background", "#ffffff");
-      node.attr("fill", d => d.children ? lightColor(d.depth) : "#e9edec");
-      label.style("fill", "#000000");
-      label.selectAll("tspan").style("fill", (d, i) => i === 1 ? "#555" : "#000000");
-      toggleButton.text("Toggle Dark Mode");
+    svg.attr("style", `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: ${backgroundColor}; cursor: pointer; font-family: 'Poppins', sans-serif;`);
+
+    node.attr("fill", d => d.children ? (isDarkMode ? darkColor(d.depth) : lightColor(d.depth)) : (isDarkMode ? "#2a2a2a" : "#e9edec"));
+
+    label.style("fill", textColor);
+    label.selectAll("tspan").style("fill", (d, i) => isDarkMode ? "#ffffff" : (i === 1 ? "#555" : "#000000"));
+
+    // Update toggle button text
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (darkModeToggle) {
+      darkModeToggle.textContent = isDarkMode ? "Toggle Light Mode" : "Toggle Dark Mode";
     }
   }
 
-  // Add click event to toggle button
-  toggleButton.on("click", toggleDarkMode);
+  // Set up event listener for dark mode toggle
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  if (darkModeToggle) {
+    darkModeToggle.addEventListener('click', () => {
+      const isDarkMode = document.body.classList.toggle('dark-mode');
+      updateColors(isDarkMode);
+    });
+  }
 
-  return Object.assign(svg.node(), {toggleContainer: toggleContainer.node()});
+  return Object.assign(svg.node(), {updateColors});
 }
 
 function _data(FileAttachment) {
@@ -174,10 +160,9 @@ export default function define(runtime, observer) {
   const main = runtime.module();
   function toString() { return this.url; }
   const fileAttachments = new Map([
-    ["data.json", {url: new URL("./files/data.json", import.meta.url), mimeType: "application/json", toString}]
+    ["data.json", {url: new URL("./data/data.json", import.meta.url), mimeType: "application/json", toString}]
   ]);
   main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
-  main.variable(observer()).define(["md"], _1);
   main.variable(observer("chart")).define("chart", ["d3", "data"], _chart);
   main.variable(observer("data")).define("data", ["FileAttachment"], _data);
   return main;
