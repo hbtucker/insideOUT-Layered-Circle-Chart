@@ -1,20 +1,19 @@
-function _1(md){return(
-md`<div style="color: grey; font: 13px/25.5px var("'Poppins', sans-serif"); text-transform: uppercase;"><h1 style="display: none;">Layered Org Chart</h1>
-  
-  <div style="color: grey; font: 10px/25.5px var("'Poppins', sans-serif"); text-transform: uppercase;"><h2 style="display: none;">Click each circle to zoom in and out of each layer. The deepest layer represents the responsibilities for an individual.</h2>`
-)}
-
-function _chart(d3,data)
-{
+function _chart(d3, data) {
   // Specify the chart's dimensions.
   const width = 928;
   const height = width;
 
-  // Create the color scale.
-  const color = d3
+  // Create the color scales for light and dark modes.
+  const lightColor = d3
     .scaleLinear()
     .domain([0, 5])
     .range(["#f6f6f6", "hsl(175,80%,40%)"])
+    .interpolate(d3.interpolateHcl);
+
+  const darkColor = d3
+    .scaleLinear()
+    .domain([0, 5])
+    .range(["#1a1a1a", "hsl(175,80%,30%)"])
     .interpolate(d3.interpolateHcl);
 
   // Compute the layout.
@@ -38,13 +37,28 @@ function _chart(d3,data)
       `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: #fff; cursor: pointer; font-family: 'Poppins', sans-serif;`
     );
 
+  // Add the dark mode toggle switch
+  const toggleContainer = d3.select(svg.node().parentNode)
+    .insert("div", ":first-child")
+    .style("position", "absolute")
+    .style("top", "10px")
+    .style("left", "10px");
+
+  const toggleButton = toggleContainer.append("button")
+    .text("Toggle Dark Mode")
+    .style("font-family", "'Poppins', sans-serif")
+    .style("padding", "5px 10px")
+    .style("cursor", "pointer");
+
+  let isDarkMode = false;
+
   // Append the nodes.
   const node = svg
     .append("g")
     .selectAll("circle")
     .data(root.descendants().slice(1))
     .join("circle")
-    .attr("fill", (d) => (d.children ? color(d.depth) : "#e9edec"))
+    .attr("fill", (d) => (d.children ? lightColor(d.depth) : "#e9edec"))
     .attr("pointer-events", (d) => (!d.children ? "none" : null))
     .on("mouseover", function () {
       d3.select(this).attr("stroke", "#6b6b6b");
@@ -145,23 +159,27 @@ function _chart(d3,data)
       });
   }
 
+  // Toggle dark mode function
+  function toggleDarkMode() {
+    isDarkMode = !isDarkMode;
+    
+    if (isDarkMode) {
+      svg.style("background", "#191919");
+      node.attr("fill", (d) => (d.children ? darkColor(d.depth) : "#2a2a2a"));
+      label.style("fill", "#ffffff");
+      label.selectAll("tspan").style("fill", "#ffffff");
+      toggleButton.text("Toggle Light Mode");
+    } else {
+      svg.style("background", "#ffffff");
+      node.attr("fill", (d) => (d.children ? lightColor(d.depth) : "#e9edec"));
+      label.style("fill", "#000000");
+      label.selectAll("tspan").style("fill", (d, i) => i === 1 ? "#555" : "#000000");
+      toggleButton.text("Toggle Dark Mode");
+    }
+  }
+
+  // Add click event to toggle button
+  toggleButton.on("click", toggleDarkMode);
+
   return svg.node();
-}
-
-
-function _data(FileAttachment){return(
-FileAttachment("data.json").json()
-)}
-
-export default function define(runtime, observer) {
-  const main = runtime.module();
-  function toString() { return this.url; }
-  const fileAttachments = new Map([
-    ["data.json", {url: new URL("./files/data.json", import.meta.url), mimeType: "application/json", toString}],
-  ]);
-  main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
-  main.variable(observer()).define(["md"], _1);
-  main.variable(observer("chart")).define("chart", ["d3","data"], _chart);
-  main.variable(observer("data")).define("data", ["FileAttachment"], _data);
-  return main;
 }
