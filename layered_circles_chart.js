@@ -1,5 +1,12 @@
-// Define the chart function
-function chart(data) {
+import * as d3 from "d3";
+
+function _1(md) {
+  return md`# Layered Org Chart
+  
+  Click each circle to zoom in and out of each layer. The deepest layer represents the responsibilities for an individual.`;
+}
+
+function _chart(d3, data) {
   // Specify the chart's dimensions.
   const width = 928;
   const height = width;
@@ -159,20 +166,19 @@ function chart(data) {
   return Object.assign(svg.node(), {toggleContainer: toggleContainer.node()});
 }
 
-// Export the chart function
-function _data(FileAttachment){return(
-FileAttachment("data.json").json()
-)}
+function _data(FileAttachment) {
+  return FileAttachment("data.json").json();
+}
 
 export default function define(runtime, observer) {
   const main = runtime.module();
   function toString() { return this.url; }
   const fileAttachments = new Map([
-    ["data.json", {url: new URL("./files/data.json", import.meta.url), mimeType: "application/json", toString}],
+    ["data.json", {url: new URL("./files/data.json", import.meta.url), mimeType: "application/json", toString}]
   ]);
   main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
   main.variable(observer()).define(["md"], _1);
-  main.variable(observer("chart")).define("chart", ["d3","data"], _chart);
+  main.variable(observer("chart")).define("chart", ["d3", "data"], _chart);
   main.variable(observer("data")).define("data", ["FileAttachment"], _data);
   return main;
 }
