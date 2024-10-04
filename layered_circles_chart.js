@@ -128,7 +128,7 @@ function _chart(d3, data) {
     
     svg.attr("style", `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: ${backgroundColor}; cursor: pointer; font-family: 'Poppins', sans-serif;`);
 
-    node.attr("fill", d => d.children ? (isDarkMode ? darkColor(d.depth) : lightColor(d.depth)) : (isDarkMode ? "#2a2a2a" : "#e9edec"));
+    node.attr("fill", d => d.children ? (isDarkMode ? darkColor(d.depth) : lightColor(d.depth)) : (isDarkMode ? "#6a6a6a" : "#e9edec"));
 
     label.style("fill", textColor);
     label.selectAll("tspan").style("fill", (d, i) => isDarkMode ? "#ffffff" : (i === 1 ? "#555" : "#000000"));
