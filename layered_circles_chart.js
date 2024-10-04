@@ -1,6 +1,3 @@
-// Import dependencies
-import * as d3 from "d3";
-
 // Define the chart function
 function chart(data) {
   // Specify the chart's dimensions.
