@@ -160,7 +160,7 @@ export default function define(runtime, observer) {
   const main = runtime.module();
   function toString() { return this.url; }
   const fileAttachments = new Map([
-    ["data.json", {url: new URL("./data/data.json", import.meta.url), mimeType: "application/json", toString}]
+    ["data.json", {url: new URL("./files/data.json", import.meta.url), mimeType: "application/json", toString}]
   ]);
   main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
   main.variable(observer("chart")).define("chart", ["d3", "data"], _chart);
