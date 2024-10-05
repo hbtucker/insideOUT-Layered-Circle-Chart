@@ -16,6 +16,9 @@ function _chart(d3, data) {
     .range(["#1a1a1a", "hsl(175,80%,30%)"])
     .interpolate(d3.interpolateHcl);
 
+  // Set initial dark mode state
+  let isDarkMode = true;
+
   // Compute the layout.
   const pack = d3.pack()
     .size([width, height])
@@ -33,7 +36,7 @@ function _chart(d3, data) {
     .attr("height", height)
     .attr(
       "style",
-      `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: #fff; cursor: pointer; font-family: 'Poppins', sans-serif;`
+      `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: #191919; cursor: pointer; font-family: 'Poppins', sans-serif;`
     );
 
   // Append the nodes.
@@ -42,9 +45,9 @@ function _chart(d3, data) {
     .selectAll("circle")
     .data(root.descendants().slice(1))
     .join("circle")
-    .attr("fill", d => d.children ? lightColor(d.depth) : "#e9edec")
+    .attr("fill", d => d.children ? darkColor(d.depth) : "#6a6a6a")
     .attr("pointer-events", d => !d.children ? "none" : null)
-    .on("mouseover", function() { d3.select(this).attr("stroke", "#6b6b6b"); })
+    .on("mouseover", function() { d3.select(this).attr("stroke", "#ffffff"); })
     .on("mouseout", function() { d3.select(this).attr("stroke", null); })
     .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
 
@@ -71,13 +74,14 @@ function _chart(d3, data) {
       el.append("tspan")
         .attr("x", 0)
         .attr("y", d.depth === 1 ? "0" : "-0.7em")
-        .text(d.data.name);
+        .text(d.data.name)
+        .style("fill", "white");
       if (d.data.title) {
         el.append("tspan")
           .attr("x", 0)
           .attr("y", d.depth === 1 ? "1.4em" : "0.7em")
           .style("font-size", "10px")
-          .style("fill", "#555")
+          .style("fill", "white")
           .text(d.data.title);
       }
     });
@@ -88,7 +92,7 @@ function _chart(d3, data) {
   let view;
   zoomTo([focus.x, focus.y, focus.r * 2]);
 
-function zoomTo(v) {
+  function zoomTo(v) {
     const k = width / v[2];
 
     view = v;
@@ -130,12 +134,12 @@ function zoomTo(v) {
     const textColor = isDarkMode ? 'white' : 'black';
     const backgroundColor = isDarkMode ? '#191919' : '#fff';
     
-    svg.attr("style", `max-: 100%; height: auto; display: block; margin: 0 -14px; background: ${backgroundColor}; cursor: pointer; font-family: 'Poppins', sans-serif;`);
+    svg.attr("style", `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: ${backgroundColor}; cursor: pointer; font-family: 'Poppins', sans-serif;`);
 
     node.attr("fill", d => d.children ? (isDarkMode ? darkColor(d.depth) : lightColor(d.depth)) : (isDarkMode ? "#6a6a6a" : "#e9edec"));
 
     label.style("fill", textColor);
-    label.selectAll("tspan").style("fill", (d, i) => isDarkMode ? "#ffffff" : (i === 1 ? "#555" : "#000000"));
+    label.selectAll("tspan").style("fill", textColor);
 
     // Update toggle button text
     const darkModeToggle = document.getElementById('darkModeToggle');
@@ -147,11 +151,16 @@ function zoomTo(v) {
   // Set up event listener for dark mode toggle
   const darkModeToggle = document.getElementById('darkModeToggle');
   if (darkModeToggle) {
+    darkModeToggle.textContent = "Toggle Light Mode";
     darkModeToggle.addEventListener('click', () => {
-      const isDarkMode = document.body.classList.toggle('dark-mode');
+      isDarkMode = !isDarkMode;
+      document.body.classList.toggle('dark-mode', isDarkMode);
       updateColors(isDarkMode);
     });
   }
+
+  // Initialize with dark mode
+  updateColors(isDarkMode);
 
   return Object.assign(svg.node(), {updateColors});
 }
