@@ -26,11 +26,15 @@ function _chart(d3, data) {
     .sort((a, b) => b.value - a.value));
 
   // Create the SVG container.
-  const svg = d3.create("svg")
-    .attr("viewBox", `-${ / 2} -${height / 2} ${width} ${height}`)
+  const svg = d3
+    .create("svg")
+    .attr("viewBox", `-${width / 2} -${height / 2} ${width} ${height}`)
     .attr("width", width)
     .attr("height", height)
-    .attr("style", `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: #fff; cursor: pointer; font-family: 'Poppins', sans-serif;`);
+    .attr(
+      "style",
+      `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: #fff; cursor: pointer; font-family: 'Poppins', sans-serif;`
+    );
 
   // Append the nodes.
   const node = svg
