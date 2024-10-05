@@ -88,8 +88,8 @@ function _chart(d3, data) {
   let view;
   zoomTo([focus.x, focus.y, focus.r * 2]);
 
-  function zoomTo(v) {
-    const k =  / v[2];
+function zoomTo(v) {
+    const k = width / v[2];
 
     view = v;
 
