@@ -47,7 +47,7 @@ function _chart(d3, data) {
     .join("circle")
     .attr("fill", d => d.children ? darkColor(d.depth) : "#6a6a6a")
     .attr("pointer-events", d => !d.children ? "none" : null)
-    .on("mouseover", function() { d3.select(this).attr("stroke", "#ffffff"); })
+    .on("mouseover", function() { d3.select(this).attr("stroke", "#f6f6f6"); })
     .on("mouseout", function() { d3.select(this).attr("stroke", null); })
     .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
 
