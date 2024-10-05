@@ -7,7 +7,7 @@ function _chart(d3, data) {
   const lightColor = d3
     .scaleLinear()
     .domain([0, 5])
-    .range(["#f6f6f6", "hsl(175,80%,40%)"])
+    .range(["#e9e9e9", "hsl(175,80%,40%)"])
     .interpolate(d3.interpolateHcl);
 
   const darkColor = d3
@@ -47,7 +47,7 @@ function _chart(d3, data) {
     .join("circle")
     .attr("fill", d => d.children ? darkColor(d.depth) : "#6a6a6a")
     .attr("pointer-events", d => !d.children ? "none" : null)
-    .on("mouseover", function() { d3.select(this).attr("stroke", "#f6f6f6"); })
+    .on("mouseover", function() { d3.select(this).attr("stroke", "#e9e9e9"); })
     .on("mouseout", function() { d3.select(this).attr("stroke", null); })
     .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
 
