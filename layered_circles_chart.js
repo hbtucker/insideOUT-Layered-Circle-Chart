@@ -1,6 +1,6 @@
 function _chart(d3, data) {
   // Specify the chart's dimensions.
-  const width = 928;
+  const width = 1200;
   const height = width;
 
   // Create the color scales for light and dark modes.
@@ -85,7 +85,7 @@ function _chart(d3, data) {
   zoomTo([focus.x, focus.y, focus.r * 2]);
 
   function zoomTo(v) {
-    const k = width / v[2];
+    const k =  / v[2];
 
     view = v;
 
@@ -126,7 +126,7 @@ function _chart(d3, data) {
     const textColor = isDarkMode ? 'white' : 'black';
     const backgroundColor = isDarkMode ? '#191919' : '#fff';
     
-    svg.attr("style", `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: ${backgroundColor}; cursor: pointer; font-family: 'Poppins', sans-serif;`);
+    svg.attr("style", `max-: 100%; height: auto; display: block; margin: 0 -14px; background: ${backgroundColor}; cursor: pointer; font-family: 'Poppins', sans-serif;`);
 
     node.attr("fill", d => d.children ? (isDarkMode ? darkColor(d.depth) : lightColor(d.depth)) : (isDarkMode ? "#6a6a6a" : "#e9edec"));
 
