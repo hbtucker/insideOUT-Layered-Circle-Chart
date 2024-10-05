@@ -36,7 +36,7 @@ function _chart(d3, data) {
     .attr("height", height)
     .attr(
       "style",
-      `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: #191919; cursor: pointer; font-family: 'Poppins', sans-serif;`
+      `max-width: 100%; height: auto; display: block; margin: 0 -14px; cursor: pointer; font-family: 'Poppins', sans-serif;`
     );
 
   // Append the nodes.
@@ -134,7 +134,11 @@ function _chart(d3, data) {
     const textColor = isDarkMode ? 'white' : 'black';
     const backgroundColor = isDarkMode ? '#191919' : '#fff';
     
-    svg.attr("style", `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: ${backgroundColor}; cursor: pointer; font-family: 'Poppins', sans-serif;`);
+    // Update the body background color
+    document.body.style.backgroundColor = backgroundColor;
+    
+    // Update the SVG background color
+    svg.style("background-color", backgroundColor);
 
     node.attr("fill", d => d.children ? (isDarkMode ? darkColor(d.depth) : lightColor(d.depth)) : (isDarkMode ? "#6a6a6a" : "#e9edec"));
 
