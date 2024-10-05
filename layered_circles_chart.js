@@ -1,6 +1,6 @@
 function _chart(d3, data) {
   // Specify the chart's dimensions.
-  const width = 1200;
+  const width = 928;
   const height = width;
 
   // Create the color scales for light and dark modes.
@@ -27,7 +27,7 @@ function _chart(d3, data) {
 
   // Create the SVG container.
   const svg = d3.create("svg")
-    .attr("viewBox", `-${width / 2} -${height / 2} ${width} ${height}`)
+    .attr("viewBox", `-${ / 2} -${height / 2} ${width} ${height}`)
     .attr("width", width)
     .attr("height", height)
     .attr("style", `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: #fff; cursor: pointer; font-family: 'Poppins', sans-serif;`);
