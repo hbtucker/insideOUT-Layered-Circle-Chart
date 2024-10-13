@@ -148,7 +148,7 @@ function _chart(d3, data) {
     // Update toggle button text
     const darkModeToggle = document.getElementById('darkModeToggle');
     if (darkModeToggle) {
-      darkModeToggle.textContent = isDarkMode ? "Toggle Light Mode" : "Toggle Dark Mode";
+      darkModeToggle.textContent = isDarkMode ? "Light Mode" : "Dark Mode";
     }
   }
 
